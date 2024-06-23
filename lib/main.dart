@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -76,68 +77,98 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Stack(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16),
+                  child: Column(children: <Widget>[
+                    SizedBox(height: 32), // For status bar padding
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF1E1E1E),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.search, color: Colors.white54),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText: 'Search locations, cities',
+                                      hintStyle:
+                                          TextStyle(color: Colors.white54),
+                                      border: InputBorder.none,
+                                    ),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                Icon(Icons.settings, color: Color(0xFFFFA500)),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF1E1E1E),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.notifications,
+                              color: Color(0xFFFFA500)),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    const TabBar(
+                      dividerColor: Colors.transparent,
+                      labelColor: Color(0xffEEA81B),
+                      unselectedLabelColor: Color(0xffFFFFFF),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorWeight: 3,
+                      indicatorColor: Color(0xffEEA81B),
+                      indicatorPadding:
+                          EdgeInsetsDirectional.only(start: 16, end: 16),
+                      tabs: <Widget>[
+                        Tab(
+                          text: 'Locales',
+                          // icon: Icon(Icons.cloud_outlined),
+                        ),
+                        Tab(
+                          text: 'Locales',
+                          // icon: Icon(Icons.beach_access_sharp),
+                        ),
+                      ],
+                    ),
+                  ])),
+            ],
+          ),
+          backgroundColor: Color(0xFF0F0F0F),
+          toolbarHeight: 122,
+        ),
+        body: const TabBarView(
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Center(
+              child: Text("It's cloudy here"),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Center(
+              child: Text("It's rainy here"),
             ),
-            Container(
-              width: 32,
-              height: 10,
-              margin: EdgeInsets.only(left: 245, top: 7),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 204, 103, 0.5),
-                borderRadius:
-                    BorderRadius.circular(0), // Set border radius if needed
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 7,
-                    spreadRadius: 0,
-                    offset: Offset(0, 0), // changes position of shadow
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
